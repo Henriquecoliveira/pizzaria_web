@@ -1,0 +1,126 @@
+/* Navegador fixo no topo */
+#navegador {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    color: #000000;
+    border-bottom: 2px solid #05040400;
+}
+
+#logo-container {
+    display: flex;
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px; /* Espaço entre a imagem e o texto */
+}
+
+#logo-container img {
+    height: 50px;
+    margin-left: 20px; /* Mantive sua margem esquerda */
+}
+
+#logo {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    margin: 0;
+}
+
+
+/* Menu em linha */
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 20px;
+    gap: 20px; /* espaçamento entre os itens */
+}
+
+/* Itens do menu */
+.menu li {
+    display: flex;
+    align-items: center;
+}
+
+/* Links do menu */
+.menu li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 16px;
+        transition: text-decoration-color 0.3s ease,
+                text-underline-offset 0.3s ease,
+                text-decoration-thickness 0.3s ease;
+}
+
+.menu li a:hover {
+    text-decoration: underline;
+    text-decoration-color: #cccccc;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition-delay: 0.12s;
+    transform: scale(1.1);
+}
+
+/* Botão de login */
+.menu li button {
+    background-color: #F54748;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.menu li button:hover {
+    background-color: #F54748cc;
+    transition: background-color 0.3s ease;
+    transform: scale(1.1);
+}
+
+.imagem_mochila img {
+    height: 35px;
+    width: 35px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-conteudo {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 600px;
+  height: 500px;
+}
+
+.pega_macaco {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.fechar {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}

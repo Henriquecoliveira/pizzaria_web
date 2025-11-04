@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="src/assets/navBarImage/Favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="src/index.css">
+    <title>Menu</title>
+</head>
+<body>
+    <nav id="navegador">
+     <div id="logo-container">
+        <img src="src/assets/navBarImage/Logo.png" alt="Logo" >
+        <h1 id="logo">Steve Pizza</h1>
+    </div>
+        <ul class="menu">
+            <li class="imagem_mochila">
+                <a href="#" onclick="abrirModal(); return false;">
+                    <img src="src/assets/navBarImage/Bag.png" alt="Abrir modal">
+                </a>
+            </li>
+            
+            <div id="minhaModal" class="modal" style="display:none;">
+                <div class="modal-conteudo">
+                    <span class="fechar" onclick="fecharModal()">&times;</span>
+                    <h3>Seus pedidos!</h3>
+                </div>
+            </div>
+
+            <li><a href="/pagina.eventos/index.html">Promo</a></li>
+            <li><a href="/pagina.menu/index.html">Menu</a></li> 
+            <li><a href="/pagina.Contato/index.html">Contato</a></li>
+            <li><button id="login-btn">Login</button></li>
+        </ul>
+    </nav>
+
+    <div class="menu-content">
+        <h1>Menu de Pizzas</h1>
+        <p>Aqui você encontra as melhores pizzas da cidade!</p>
+    </div>
+
+    <div class="nav-pizza">
+        <ul class="bolinha">
+            <li>
+                <div class="item-ativo">
+                    <img src="src/assets/icons/IconPizza.png" alt="" class="imagemPesquisa">
+                    <a href="/pagina.menu/index.html" class="TituloMenu">Pizza</a></div>
+            </li>
+            <li>
+                <div class="item-ativo">
+                    <img src="src/assets/icons/Iconbebidas.png" alt="" class="imagemPesquisa">
+                    <a href="/pagina.menu/src/assets/Paginabebidas/index.html" class="TituloMenu">Bebidas</a></div>
+            </li>
+            <li>
+                <div class="item-ativo">
+                    <img src="src/assets/icons/IconSobremesa.png" alt="" class="imagemPesquisa">
+                    <a href="/pagina.menu/src/assets/PaginaSobremesas/index.html" class="TituloMenu">Sobremesas</a></div>
+            </li>
+        </ul>
+    </div>
+    
+        <div class="pizza-gallery">
+                  <div class="pizza">
+                    <img src="src/ImagensPizzas/Americana.png" class="ImagensP" alt="Pizza Americana">
+                    <h2>Americana</h2>
+                    <p>Molho de tomate, queijo, pepperoni e azeitonas.</p>
+                    <span class="price">R$ 34,90</span>
+                    <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+                  </div>
+         
+                 <div class="pizza">
+                   <img src="src/ImagensPizzas/Vegana.png" class="ImagensP" alt="Pizza Vegana">
+                   <h2>Vegana</h2>
+                   <p>Molho de tomate, queijo vegano, cogumelos e pimentões.</p>
+                   <span class="price">R$ 30,90</span>
+                   <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+                 </div>
+
+                 <div class="pizza">
+                   <img src="src/ImagensPizzas/Italiana.png" class="ImagensP" alt="Pizza Italiana">
+                   <h2>Italiana</h2>
+                   <p>Molho de tomate, queijo, presunto, cogumelos e azeitonas.</p>
+                   <span class="price">R$ 32,90</span>
+                   <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+                 </div>
+
+                  <div class="pizza">
+                      <img src="src/ImagensPizzas/ModaDaCasa.png" alt="Pizza Moda da Casa" class="ImagensP">
+                      <h2>Moda da Casa</h2>
+                      <p>Molho de tomate, queijo, presunto, ovos e ervilhas.</p>
+                      <span class="price">R$ 33,90</span>
+                      <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+              </div>
+                    <div class="pizza">
+                        <img src="src/ImagensPizzas/Queijo.png" alt="Pizza Queijo" class="ImagensP">
+                        <h2>Queijo</h2>
+                        <p>Molho de tomate, queijo e orégano.</p>
+                        <span class="price">R$ 28,90</span>
+                        <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+                  </div>
+                     <div class="pizza">
+                         <img src="src/ImagensPizzas/Sausa.png" alt="Pizza Sausa" class="ImagensP">
+                         <h2>Sausa</h2>
+                         <p>Molho de tomate, queijo, linguiça e azeitonas.</p>
+                         <span class="price">R$ 36,90</span>
+                        <button class="botao">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </button>
+                     </div>
+              </section>
+            </body>
+        <script src="src/script.js"></script>
+    </html>

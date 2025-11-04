@@ -1,0 +1,55 @@
+.imagemPesquisa {
+    width: 35px;          /* ajustado para caber melhor */
+    height: 35px;
+    margin-right: 0;      /* removido espaço extra */
+    border-radius: 50%;   /* arredondada */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-shrink: 0;       /* garante que a imagem não encolha */
+}
+
+.item-ativo {
+    font-weight: bold;
+    background-color: #F5F5F5;
+    height: 45px;
+    width: 170px;
+    border-radius: 75px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;      /* centraliza verticalmente o texto */
+    justify-content: flex-start; /* imagem colada à esquerda */
+    gap: 10px;                /* distância entre imagem e texto */
+    padding: 0 10px;          /* pequeno espaçamento interno */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.item-ativo:hover {
+    background-color: #dd3838;
+    transform: scale(1.10);
+}
+
+.TituloMenu {
+    text-decoration: none;
+    border: none;
+    color: black;
+    font-size: 15px;
+    margin: 0;
+    display: flex;
+    align-items: center;      /* alinha verticalmente com a imagem */
+}
+
+.bolinha {
+    list-style: none;
+    padding: 0;       /* remove espaçamento interno */
+    margin: 0;        /* remove espaçamento externo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    height: 15px;
+    padding: 45px;    /* mantém espaçamento do container */
+    color: black;
+}
+
+

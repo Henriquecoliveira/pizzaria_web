@@ -1,0 +1,44 @@
+/* Remove o filtro blur do #principal */
+#principal {
+    background: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 99.20vw;
+    height: calc(100vh - 80px); 
+    color: white;
+    /*margin-top: 80px;
+    esse margin ferra o bgl */
+}
+
+.texto p {
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra para o parágrafo */
+    background-color: #000000cc; /* Fundo preto com transparência */
+    display: inline-block; /* Faz o fundo envolver apenas o texto */
+    border-radius: 70px;
+    padding: 10px 20px;
+}
+
+.texto button {
+    background-color: #F54748;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}   
+
+.texto button:hover {
+    background-color: #e24242cc;
+    transform: scale(1.10);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+      font-style: normal;
+}

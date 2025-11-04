@@ -1,0 +1,84 @@
+#fundo {
+    width: 1440px;
+    height: 781px;
+}
+
+/* Adiciona um pseudo-elemento para aplicar o blur somente na imagem */
+#principal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('./assets/ImagemPizza.jpg') no-repeat center center;
+    background-size: cover;
+    filter: blur(2px);
+    z-index: 1;
+}
+
+/* Remove o filtro blur do #principal */
+#principal {
+    background: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 99.20vw;
+    height: calc(100vh - 80px); 
+    color: white;
+    /*margin-top: 80px;
+    esse margin ferra o bgl */
+}
+
+/* Garante que o texto fique acima do pseudo-elemento */
+.texto {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    padding: 40px 20px;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.85), 0 0 6px #ff0000cc;
+    /* Deixa o texto mais aparente e do tamanho da imagem, sem quebrar os lados */
+    background-color: #00000091; /* Fundo preto com transparência */
+    border-radius: 40px;
+    padding: 28px 16px;
+    box-shadow: 0 0 30px 8px rgba(0,0,0,0.6);
+    height: 93%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.texto p {
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra para o parágrafo */
+    background-color: #0000009a; /* Fundo preto com transparência */
+    display: inline-block; /* Faz o fundo envolver apenas o texto */
+    border-radius: 70px;
+    padding: 10px 20px;
+}
+
+.texto button {
+    background-color: #962222a9;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}   
+
+.texto button:hover {
+    background-color: #f52323cc;
+    transform: scale(1.10);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+      font-style: normal;
+}
