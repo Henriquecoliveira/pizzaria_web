@@ -33,16 +33,6 @@ export async function getPool(): Promise<ConnectionPool> {
   return pool; // retorna a conexão para quem chamou a função
 }
 
-// exemplo de query para buscar usuários no banco de dados
-export async function buscarUsuarios(usuario: string): Promise<IResult<any>> {
-  const p = await getPool(); // garante que estamos conectados à pool
-  // .input define parâmetros tipados, evita concatenar strings na query
-  const result = await p.request() // cria uma nova query no db isolada, assim não há conflito entre várias requisições
-    .input('USUARIO', sql.VarChar(100), `%${usuario}%`) // formata o parâmetro, prevenindo SQL Injection
-    .query('SELECT USUARIO_ID, USUARIO, EMAIL, CPF, TELEFONE, RUA, CIDADE, BAIRRO, NUMERO_CASA FROM CLIENTES WHERE USUARIO LIKE @USUARIO');
-  return result;
-}
-
 /** Fecha a pool (útil em scripts / testes) */
 export async function fecharPool() {
   if (pool) {
