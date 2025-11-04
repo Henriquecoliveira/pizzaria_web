@@ -1,0 +1,54 @@
+// Essa parte do código serve para fazer a conexão com o banco de dados SQL Server
+// usando o pacote 'mssql'
+
+import sql, { ConnectionPool, IResult } from 'mssql'; // ponto de atenção, sobre o diretório que o gpt direcionou o mssql1
+
+// configuração da conexão ao banco de dados
+const config: sql.config = {
+  user: process.env.DB_USER || 'sa',
+  password: process.env.DB_PASS || 'P@ssw0rd',
+  server: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'PIZZARIA',
+  port: Number(process.env.DB_PORT) || 1433,
+  options: {
+    encrypt: false, // ponto de atenção caso a conexão não funcione!!! (não sei se é encriptado)
+  },
+
+  // define o tammanho da poll de conexões
+  // basicamente para não haver várias aberturas desnecessárias de conexão ao banco
+  // já é delimitado um máximo de conexões simultâneas que o programa "empresta" ao usuário
+  pool: {
+    max: 5, // máximo de conexões na pool
+    min: 0, // mínimo de conexões na pool
+    idleTimeoutMillis: 20000 // tempo para fechar conexões ociosas
+  }
+};
+
+let pool: ConnectionPool | null = null; // guarda a pool de conexões
+
+// abre (ou reusa) a pool de conexões
+export async function getPool(): Promise<ConnectionPool> {
+  if (pool && pool.connected) return pool; // verifica se já existe uma pool & se ela está conectada
+  pool = await sql.connect(config);
+  return pool; // retorna a conexão para quem chamou a função
+}
+
+// exemplo de query para buscar usuários no banco de dados
+export async function buscarUsuarios(usuario: string): Promise<IResult<any>> {
+  const p = await getPool(); // garante que estamos conectados à pool
+  // .input define parâmetros tipados, evita concatenar strings na query
+  const result = await p.request() // cria uma nova query no db isolada, assim não há conflito entre várias requisições
+    .input('USUARIO', sql.VarChar(100), `%${usuario}%`) // formata o parâmetro, prevenindo SQL Injection
+    .query('SELECT USUARIO_ID, USUARIO, EMAIL, CPF, TELEFONE, RUA, CIDADE, BAIRRO, NUMERO_CASA FROM CLIENTES WHERE USUARIO LIKE @USUARIO');
+  return result;
+}
+
+/** Fecha a pool (útil em scripts / testes) */
+export async function fecharPool() {
+  if (pool) {
+    await pool.close();
+    pool = null;
+  }
+}
+
+
