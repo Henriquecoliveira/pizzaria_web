@@ -1,7 +1,7 @@
 // Essa parte do código serve para fazer a conexão com o banco de dados SQL Server
 // usando o pacote 'mssql'
 
-import sql, { ConnectionPool, IResult } from 'mssql'; // ponto de atenção, sobre o diretório que o gpt direcionou o mssql1
+import sql, { ConnectionPool} from 'mssql'; 
 
 // configuração da conexão ao banco de dados
 const config: sql.config = {
@@ -11,7 +11,7 @@ const config: sql.config = {
   database: process.env.DB_NAME || 'PIZZARIA',
   port: Number(process.env.DB_PORT) || 1433,
   options: {
-    encrypt: false, // ponto de atenção caso a conexão não funcione!!! (não sei se é encriptado)
+    encrypt: false, // para conexões locais, geralmente é false
   },
 
   // define o tammanho da poll de conexões

@@ -14,13 +14,9 @@ export async function cadastrarCliente(cliente: Cliente): Promise<IResult<any>> 
     .input('senha', sql.VarChar(255), cliente.senha)
     .input('cpf', sql.VarChar(11), cliente.cpf ?? '')
     .input('telefone', sql.VarChar(20), cliente.telefone ?? '')
-    .input('rua', sql.VarChar(200), cliente.rua ?? '')
-    .input('cidade', sql.VarChar(100), cliente.cidade ?? '')
-    .input('bairro', sql.VarChar(100), cliente.bairro ?? '')
-    .input('numero_casa', sql.VarChar(20), cliente.numero_casa ?? '')
     .query(`
-      INSERT INTO CLIENTES (EMAIL, USUARIO, SENHA, CPF, TELEFONE, RUA, CIDADE, BAIRRO, NUMERO_CASA)
-      VALUES (@email, @usuario, @senha, @cpf, @telefone, @rua, @cidade, @bairro, @numero_casa);
+      INSERT INTO CLIENTES (EMAIL, USUARIO, SENHA, CPF, TELEFONE)
+      VALUES (@email, @usuario, @senha, @cpf, @telefone);
       SELECT SCOPE_IDENTITY() AS usuarioId; -- retorna o id gerado
     `);
 

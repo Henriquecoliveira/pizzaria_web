@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // rota para cadastrar usuário
 app.post('/api/usuarios', async (req, res) => {
   try {
-    const { email, usuario, senha, cpf, telefone, rua, cidade, bairro, numero_casa } = req.body;
+    const { email, usuario, senha, cpf, telefone } = req.body;
     // extrai cada campo do corpo da requisição
 
     // validação de inserção dos campos obrigatórios
@@ -36,16 +36,14 @@ app.post('/api/usuarios', async (req, res) => {
       senha,
       cpf,
       telefone,
-      rua,
-      cidade,
-      bairro,
-      numero_casa
     };
 
     // cadastra no banco
     const result = await cadastrarCliente(cliente);
     const usuarioId = result.recordset && result.recordset[0] ? result.recordset[0].usuarioId : null; // captura o usuarioId criado pelo bd
 
+
+    // é necessário ter esses campos de resposta para o nosso projeto mais simples? considerar remover, mesmo que esteja fora das boas práticas!!!
     // resposta de sucesso
     return res.status(201).json({ message: 'Usuário cadastrado com sucesso!', usuarioId });
   } 
