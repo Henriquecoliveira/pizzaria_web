@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!-- INICIA O CÓDIGO PARA INCLUIR PIZZAS -->
 <!-- 1. Botão que cria/exibe o formulário -->
 <button onclick="mostrarForm()">Cadastrar Pizza</button>
 
@@ -49,6 +50,38 @@ document.getElementById("pizzaForm").addEventListener("submit", async (e) => {
     const data = await res.json();
     alert(data.message || data.error);
 });
+</script>
+
+<!-- INICIA O CÓDIGO PARA DELETAR PIZZAS -->
+<hr>
+
+<button onclick="mostrarDeletar()">Deletar Pizza</button>
+
+<div id="deleteBox" style="display:none; margin-top:10px;">
+    <h3>Remover pizza</h3>
+    <input id="pizzaId" placeholder="ID da pizza (opcional)">
+    <input id="pizzaNome" placeholder="Nome da pizza (opcional)">
+    <button onclick="deletarPizza()">Excluir</button>
+</div>
+
+<script>
+function mostrarDeletar() {
+    document.getElementById("deleteBox").style.display = "block";
+}
+
+async function deletarPizza() {
+    const id = document.getElementById("pizzaId").value;
+    const nome = document.getElementById("pizzaNome").value;
+
+    const resp = await fetch("http://localhost:3000/pizza", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, nome })
+    });
+
+    const result = await resp.json();
+    alert(result.message || result.error);
+}
 </script>
 
 </body>

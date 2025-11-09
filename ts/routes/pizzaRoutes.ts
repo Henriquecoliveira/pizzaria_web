@@ -61,4 +61,35 @@ router.post("/", upload.single("imagem"), async (req, res) => {
     }
 });
 
+// DELETAR PIZZA por ID ou nome
+router.delete("/", async (req, res) => {
+    try {
+        const { id, nome } = req.body;
+        const pool = await getPool();
+
+        if (!id && !nome) {
+            return res.status(400).json({ error: "Envie o ID ou o nome da pizza" });
+        }
+
+        if (id) {
+            await pool.request()
+                .input("id", Number(id))
+                .query(`DELETE FROM PIZZA WHERE PIZZA_ID = @id`);
+        }
+
+        if (nome) {
+            await pool.request()
+                .input("nome", nome)
+                .query(`DELETE FROM PIZZA WHERE PIZZA = @nome`);
+        }
+
+        res.json({ message: "Pizza removida com sucesso!" });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro ao remover pizza" });
+    }
+});
+
+
 export default router;

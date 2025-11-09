@@ -9,11 +9,14 @@ import { fileURLToPath } from "url";
 // imports locais
 import pizzaRoutes from './routes/pizzaRoutes.js';
 const app = express();
-// Permite chamadas externas (corrigido)
+// Permite chamadas externas (corrigido e adicionando métodos que faltavam)
 app.use(cors({
     origin: "*",
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // ← agora DELETE e OPTIONS são permitidos
+    allowedHeaders: ["Content-Type", "Authorization"] // ← garante que o envio do JSON funcione
 }));
+// suporte explícito ao preflight do navegador (OPTIONS)
+app.options(/.*/, cors());
 // converte o corpo das requisições de strings para JSON
 app.use(bodyParser.json());
 // Serve arquivos estáticos desde a raiz do projeto
