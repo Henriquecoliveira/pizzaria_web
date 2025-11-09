@@ -1,0 +1,98 @@
+/* ====== SEÇÃO VERMELHA ====== */
+.Vermelho {
+  background-color: #dd3838;
+  color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 250px; /* espaço entre imagem e textos */
+  flex-wrap: wrap;
+  padding: 60px 40px;
+  border-radius: 10px;
+  box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+/* ====== BLOCO DE TEXTO E FORMULÁRIO ====== */
+.reserva-bloco {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px; /* deixa os títulos e o formulário bem próximos */
+  max-width: 500px;
+}
+
+.Vermelho h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  letter-spacing: 2px;
+}
+
+.Vermelho h2 {
+  color: #0000009a;
+  margin-bottom: 5px;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.Vermelho h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+ letter-spacing: 1px; 
+}
+
+/* ====== FORMULÁRIO DE RESERVA ====== */
+.reserva {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.reserva input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #e7afaf;
+  border-radius: 8px;
+  width: calc(50% - 5px);
+  box-sizing: border-box;
+}
+
+.reserva input::placeholder {
+  color: #999;
+  font-style: italic;
+  opacity: 1;
+}
+
+.reserva button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 35px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.reserva button:hover {
+  background-color: #1d0d0d;
+  transform: scale(1.05);
+}
+
+/* ====== IMAGEM ====== */
+.reserva-img {
+  max-width: 800px;
+  width: 70%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  align-self: center;
+}
+

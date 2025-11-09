@@ -1,0 +1,25 @@
+.pizza-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* isso cria várias colunas de no mínimo 300px */
+  gap: 30px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto; /* centraliza na tela */
+}
+
+.pizza {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+}
+
+.ImagensP {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  height: auto;
+}
+
