@@ -2,20 +2,31 @@
 // ele serve para criar o servidor que fará a comunicação entre o frontend + backend + banco de dados
 
 // imports de bibliotecas externas
-import express from 'express'; // framework nodeJS para criar APIS e gerenciar rotas
-import bodyParser from 'body-parser'; // converte o corpo das requisições em JSON
+import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path'; // ← novo
 
 // imports locais
+import pizzaRoutes from './routes/pizzaRoutes';
 
-const app = express(); // cria a aplicação express
+const app = express();
 
-// permite requisições do frontend
-app.use(cors());
+// Permite chamadas externas (corrigido)
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"]
+}));
 
 // converte o corpo das requisições de strings para JSON
 app.use(bodyParser.json());
 
+// Serve arquivos estáticos desde a raiz do projeto
+app.use(express.static(path.join(__dirname, "..")));
+
+// usa as rotas de pizza
+app.use(pizzaRoutes);
+
 // inicia o servidor
-const PORT = process.env.PORT || 3000; // porta padrao 3000 usada pelo nodeJS em desenvolvimento de servidores web 
-app.listen(PORT, () => console.log(`✅ Servidor rodando na porta ${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

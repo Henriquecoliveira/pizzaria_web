@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Pizza</title>
+</head>
+<body>
+
+<!-- 1. Botão que cria/exibe o formulário -->
+<button onclick="mostrarForm()">Cadastrar Pizza</button>
+
+<!-- 2. Formulário começa oculto -->
+<div id="formContainer" style="display: none; margin-top: 10px;">
+    <!-- 3. enctype="multipart/form-data" é obrigatório para enviar arquivos -->
+    <form id="pizzaForm" enctype="multipart/form-data">
+        
+        <!-- 4. Campos iguais aos do banco -->
+        <input placeholder="Nome da Pizza" name="pizza" required /><br><br>
+        <input placeholder="Ingredientes" name="ingredientes" required /><br><br>
+        <input placeholder="Preço" name="preco" type="number" step="0.01" required /><br><br>
+
+        <!-- 5. Input para upload da imagem -->
+        <input type="file" name="imagem" accept="image/*" required /><br><br>
+
+        <!-- 6. Botão que envia o form -->
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+
+<script>
+// 7. Exibe o formulário ao clicar no botão
+function mostrarForm() {
+    document.getElementById("formContainer").style.display = "block";
+}
+
+// 8. Captura o envio e manda para o backend
+document.getElementById("pizzaForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    // 9. Envia para a sua rota do backend
+    const res = await fetch("http://localhost:3000/pizza", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    alert(data.message || data.error);
+});
+</script>
+
+</body>
+</html>
