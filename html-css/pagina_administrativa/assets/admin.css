@@ -1,0 +1,201 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* ===== HEADER ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e6e6; /* <<< substitui a linha amarela */
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-wrapper img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* ===== LINKS DO MENU (IGUAL AO NAV.CSS PRINCIPAL) ===== */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+/* Estilo padrão dos links */
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 
+        text-decoration-color 0.3s ease,
+        text-underline-offset 0.3s ease,
+        text-decoration-thickness 0.3s ease,
+        transform .2s ease,
+        color .2s ease;
+}
+
+/* Hover igual ao nav.css principal */
+nav ul li a:hover {
+    text-decoration: underline;
+    text-decoration-color: #b8b8b8;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transform: translateY(-2px);
+    color: #000; /* preto durante o hover */
+}
+
+.login-btn {
+    background: #ff6b6b;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white !important;
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    background: #ff5252;
+}
+
+/* ===== BOTÕES PRINCIPAIS ===== */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 60px 0;
+}
+
+.action-btn {
+    background: #e87e2a;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+}
+
+.action-btn:hover {
+    background: #ff8a3d;
+    transform: scale(1.05);
+}
+
+.action-btn.remove {
+    background: #ff4d4d;
+}
+
+.action-btn.remove:hover {
+    background: #ff3838;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 25px 35px;
+    border-radius: 14px;
+    width: 380px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #e87e2a;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #444;
+}
+
+/* ===== FORM ===== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+form input,
+form textarea {
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #cccccc; /* <<< borda neutra */
+    background: #fafafa;
+    font-size: 15px;
+    outline: none;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #e87e2a; /* laranja do layout */
+}
+
+.submit {
+    background: #e87e2a;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    color: white;
+    transition: .3s;
+}
+
+.submit:hover {
+    background: #ff8a3d;
+}
+
+.submit.remove {
+    background: #ff4d4d;
+}
+
+.submit.remove:hover {
+    background: #ff3838;
+}
