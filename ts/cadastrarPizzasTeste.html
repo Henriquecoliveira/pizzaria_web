@@ -83,6 +83,25 @@ async function deletarPizza() {
     const result = await resp.json();
     alert(result.message || result.error);
 }
+
+// ----------------------
+// LISTAR PIZZAS (GET)
+// ----------------------
+router.get('/listar', async (req, res) => {
+    try {
+        const pool = await getPool();
+        const result = await pool.request().query(`
+            SELECT PIZZA_ID, PIZZA, INGREDIENTES, PRECO, IMAGEM_URL
+            FROM PIZZA
+        `);
+
+        res.json(result.recordset);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao buscar pizzas.');
+    }
+});
+
 </script>
 
 </body>

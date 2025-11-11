@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="src/assets/navBarImage/Favicon.png">
+
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alice&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- ÍCONES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS LOCAL -->
     <link rel="stylesheet" href="src/index.css">
     <title>Menu</title>
 </head>
 <body>
+
+    <!-- ================= NAVBAR ================= -->
     <nav id="navegador">
-     <div id="logo-container">
-        <img src="src/assets/navBarImage/Logo.png" alt="Logo" >
-        <h1 id="logo">Steve Pizza</h1>
-    </div>
+        <div id="logo-container">
+            <img src="src/assets/navBarImage/Logo.png" alt="Logo">
+            <h1 id="logo">Steve Pizza</h1>
+        </div>
+
         <ul class="menu">
             <li class="imagem_mochila">
                 <a href="#" onclick="abrirModal(); return false;">
                     <img src="src/assets/navBarImage/Bag.png" alt="Abrir modal">
                 </a>
             </li>
-            
+
+            <!-- MODAL (sacola de pedidos) -->
             <div id="minhaModal" class="modal" style="display:none;">
                 <div class="modal-conteudo">
                     <span class="fechar" onclick="fecharModal()">&times;</span>
@@ -33,53 +41,100 @@
                 </div>
             </div>
 
+            <!-- LINKS DO NAV -->
             <li><a href="/html-css/pagina.eventos/index.html">Promo</a></li>
-            <li><a href="/html-css/pagina.menu/index.html">Menu</a></li> 
+            <li><a href="/html-css/pagina.menu/index.html">Menu</a></li>
             <li><a href="/html-css/pagina.Contato/index.html">Contato</a></li>
             <li><a href="/html-css/pagina_administrativa/index.html">Adicionar pizzas</a></li>
-
             <li><button id="login-btn">Login</button></li>
         </ul>
     </nav>
 
+    <!-- ================= TÍTULO PAGE ================= -->
     <div class="menu-content">
-        <h1>Menu de Pizzas</h1>
+        <h1>MENU DE PIZZAS</h1>
         <p>Aqui você encontra as melhores pizzas da cidade!</p>
     </div>
 
+    <!-- ================= CATEGORIAS ================= -->
     <div class="nav-pizza">
         <ul class="bolinha">
             <li>
                 <div class="item-ativo">
-                    <img src="src/assets/icons/IconPizza.png" alt="" class="imagemPesquisa">
-                    <a href="/pagina.menu/index.html" class="TituloMenu">Pizza</a></div>
+                    <img src="src/assets/icons/IconPizza.png" class="imagemPesquisa">
+                    <a href="/pagina.menu/index.html" class="TituloMenu">Pizza</a>
+                </div>
             </li>
             <li>
                 <div class="item-ativo">
-                    <img src="src/assets/icons/Iconbebidas.png" alt="" class="imagemPesquisa">
-                    <a href="/pagina.menu/src/assets/Paginabebidas/index.html" class="TituloMenu">Bebidas</a></div>
+                    <img src="src/assets/icons/Iconbebidas.png" class="imagemPesquisa">
+                    <a href="/pagina.menu/src/assets/Paginabebidas/index.html" class="TituloMenu">Bebidas</a>
+                </div>
             </li>
             <li>
                 <div class="item-ativo">
-                    <img src="src/assets/icons/IconSobremesa.png" alt="" class="imagemPesquisa">
-                    <a href="/pagina.menu/src/assets/PaginaSobremesas/index.html" class="TituloMenu">Sobremesas</a></div>
+                    <img src="src/assets/icons/IconSobremesa.png" class="imagemPesquisa">
+                    <a href="/pagina.menu/src/assets/PaginaSobremesas/index.html" class="TituloMenu">Sobremesas</a>
+                </div>
             </li>
         </ul>
     </div>
-    
-        <div class="pizza-gallery">
-                  <div class="pizza">
-                    <img src="src/ImagensPizzas/Americana.png" class="ImagensP" alt="Pizza Americana">
-                    <h2>Americana</h2>
-                    <p>Molho de tomate, queijo, pepperoni e azeitonas.</p>
-                    <span class="price">R$ 34,90</span>
-                    <button class="botao">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
-                  </div>
 
-                     </div>
-              </section>
-            </body>
-        <script src="src/script.js"></script>
-    </html>
+    <!-- ================= GALERIA DE PIZZAS ================= -->
+    <div class="pizza-gallery">
+
+        <!-- 🔹 CARD ESTÁTICO: permanece como exemplo -->
+        <div class="pizza">
+            <img src="src/ImagensPizzas/Americana.png" class="ImagensP" alt="Pizza Americana">
+            <h2>Americana</h2>
+            <p>Molho de tomate, queijo, pepperoni e azeitonas.</p>
+            <span class="price">R$ 34,90</span>
+            <button class="botao">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </button>
+        </div>
+
+        <!-- 🔹 AQUI AS PIZZAS DO BANCO SERÃO INSERIDAS -->
+        <div id="listaPizzas"></div>
+
+    </div>
+
+    <!-- ================= SCRIPT PARA CARREGAR PIZZAS DO BANCO ================= -->
+    <script>
+    async function carregarPizzas() {
+        // faz uma requisição para o backend (rota GET criada anteriormente)
+        const resposta = await fetch("http://localhost:3000/pizza/listar");
+
+        // transforma o resultado em JSON
+        const pizzas = await resposta.json();
+
+        // seleciona o container onde os cards serão inseridos
+        const container = document.querySelector("#listaPizzas");
+        container.innerHTML = ""; // limpa pra não duplicar pizzas
+
+        // percorre cada pizza e cria um card dinamicamente
+        pizzas.forEach(pizza => {
+            container.innerHTML += `
+            <div class="pizza">
+                <!-- IMAGEM VEM DO BANCO / UPLOAD -->
+                <img src="http://localhost:3000/uploads/${pizza.IMAGEM_URL}" class="ImagensP" alt="${pizza.PIZZA}">
+                <h2>${pizza.PIZZA}</h2>
+                <p>${pizza.INGREDIENTES}</p>
+                <span class="price">R$ ${pizza.PRECO.toFixed(2)}</span>
+                <button class="botao">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </button>
+            </div>
+            `;
+        });
+    }
+
+    // executa ao abrir a página
+    carregarPizzas();
+    </script>
+
+    <!-- Script original da página -->
+    <script src="src/script.js"></script>
+
+</body>
+</html>
