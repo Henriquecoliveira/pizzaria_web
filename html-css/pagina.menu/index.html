@@ -27,23 +27,25 @@
         </div>
 
         <ul class="menu">
+            <!-- 🔹 Mochila: botão que abre o pop-up -->
             <li class="imagem_mochila">
                 <a href="#" onclick="abrirModal(); return false;">
                     <img src="src/assets/navBarImage/Bag.png" alt="Abrir modal">
                 </a>
             </li>
 
-            <!-- MODAL (sacola de pedidos) -->
-            <div id="minhaModal" class="modal" style="display:none;">
+            <!-- 🔹 MODAL (sacola de pedidos) -->
+            <div id="minhaModal" class="modal">
                 <div class="modal-conteudo">
                     <span class="fechar" onclick="fecharModal()">&times;</span>
                     <h3>Seus pedidos!</h3>
+                    <ul id="listaRecibo"></ul>
+                    <p id="totalRecibo"></p>
                 </div>
             </div>
 
-            <!-- LINKS DO NAV -->
+            <!-- 🔹 LINKS DO NAV -->
             <li><a href="/html-css/pagina.eventos/index.html">Promo</a></li>
-            <li><a href="/html-css/pagina.menu/index.html">Menu</a></li>
             <li><a href="/html-css/pagina.Contato/index.html">Contato</a></li>
             <li><a href="/html-css/pagina_administrativa/index.html">Adicionar pizzas</a></li>
             <li><button id="login-btn">Login</button></li>
@@ -62,19 +64,7 @@
             <li>
                 <div class="item-ativo">
                     <img src="src/assets/icons/IconPizza.png" class="imagemPesquisa">
-                    <a href="/pagina.menu/index.html" class="TituloMenu">Pizza</a>
-                </div>
-            </li>
-            <li>
-                <div class="item-ativo">
-                    <img src="src/assets/icons/Iconbebidas.png" class="imagemPesquisa">
-                    <a href="/pagina.menu/src/assets/Paginabebidas/index.html" class="TituloMenu">Bebidas</a>
-                </div>
-            </li>
-            <li>
-                <div class="item-ativo">
-                    <img src="src/assets/icons/IconSobremesa.png" class="imagemPesquisa">
-                    <a href="/pagina.menu/src/assets/PaginaSobremesas/index.html" class="TituloMenu">Sobremesas</a>
+                    <a href="#" class="TituloMenu" onclick="return false;">Pizza</a>
                 </div>
             </li>
         </ul>
@@ -82,59 +72,16 @@
 
     <!-- ================= GALERIA DE PIZZAS ================= -->
     <div class="pizza-gallery">
-
-        <!-- 🔹 CARD ESTÁTICO: permanece como exemplo -->
-        <div class="pizza">
-            <img src="src/ImagensPizzas/Americana.png" class="ImagensP" alt="Pizza Americana">
-            <h2>Americana</h2>
-            <p>Molho de tomate, queijo, pepperoni e azeitonas.</p>
-            <span class="price">R$ 34,90</span>
-            <button class="botao">
-                <i class="fa-solid fa-basket-shopping"></i>
-            </button>
-        </div>
-
         <!-- 🔹 AQUI AS PIZZAS DO BANCO SERÃO INSERIDAS -->
         <div id="listaPizzas"></div>
-
     </div>
 
-    <!-- ================= SCRIPT PARA CARREGAR PIZZAS DO BANCO ================= -->
-    <script>
-    async function carregarPizzas() {
-        // faz uma requisição para o backend (rota GET criada anteriormente)
-        const resposta = await fetch("http://localhost:3000/pizza/listar");
+    <!-- ================= SCRIPTS ================= -->
+    <!-- 🔹 Script principal com funções do modal e login -->
+    <script src="script.js"></script>
 
-        // transforma o resultado em JSON
-        const pizzas = await resposta.json();
-
-        // seleciona o container onde os cards serão inseridos
-        const container = document.querySelector("#listaPizzas");
-        container.innerHTML = ""; // limpa pra não duplicar pizzas
-
-        // percorre cada pizza e cria um card dinamicamente
-        pizzas.forEach(pizza => {
-            container.innerHTML += `
-            <div class="pizza">
-                <!-- IMAGEM VEM DO BANCO / UPLOAD -->
-                <img src="http://localhost:3000/uploads/${pizza.IMAGEM_URL}" class="ImagensP" alt="${pizza.PIZZA}">
-                <h2>${pizza.PIZZA}</h2>
-                <p>${pizza.INGREDIENTES}</p>
-                <span class="price">R$ ${pizza.PRECO.toFixed(2)}</span>
-                <button class="botao">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </button>
-            </div>
-            `;
-        });
-    }
-
-    // executa ao abrir a página
-    carregarPizzas();
-    </script>
-
-    <!-- Script original da página -->
-    <script src="src/script.js"></script>
+    <!-- 🔹 Script que carrega dinamicamente as pizzas do backend -->
+    <script src="src/carregarPizzas.js"></script>
 
 </body>
 </html>

@@ -93,24 +93,83 @@
     width: 35px;
 }
 
+/* ======= MODAL (Recibo) ======= */
 .modal {
+  display: none; /* começa invisível */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
+  background-color: rgba(0,0,0,0.6);
   justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
+/* ======= Conteúdo da modal ======= */
 .modal-conteudo {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 600px;
-  height: 500px;
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  animation: aparecer 0.3s ease;
+}
+
+/* Animação suave na entrada */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======= Título ======= */
+.modal-conteudo h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ======= Lista de pedidos ======= */
+#listaRecibo {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+  text-align: left;
+}
+
+#listaRecibo li {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #333;
+}
+
+/* ======= Total ======= */
+#totalRecibo {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 17px;
+  color: #000;
+}
+
+/* ======= Botão de fechar ======= */
+.fechar {
+  color: #F54748;
+  float: right;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: -10px;
+}
+
+.fechar:hover {
+  color: #d43c3d;
 }
 
 .pega_macaco {

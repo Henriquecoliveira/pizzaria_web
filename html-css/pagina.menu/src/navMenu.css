@@ -67,3 +67,84 @@
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
 }
+
+#listaPizzas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 200px;
+  row-gap: 50px;       /* controla o espaço vertical */
+  justify-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  #listaPizzas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pizza {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 80px;
+  width: 100%;
+  max-width: 700px;
+  transition: transform 0.2s ease;
+
+  /* 🔹 Novo: garante alinhamento centralizado dos elementos internos */
+  display: flex;
+  flex-direction: column;
+  align-items: center;        /* centraliza horizontalmente o conteúdo do card */
+  justify-content: space-between;
+}
+
+.pizza:hover {
+  transform: scale(1.03);
+}
+
+/* ======== CONTADOR DE PIZZAS ======== */
+.acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;    /* 🔹 centraliza horizontalmente o grupo de botões */
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.contador-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;    /* 🔹 centraliza o conteúdo interno do contador */
+  gap: 6px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 4px 6px;
+}
+
+.contador {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #d33;
+  transition: transform 0.2s ease;
+}
+
+.contador.ativo {
+  transform: scale(1.15);
+}
+
+.diminuir {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.diminuir:hover {
+  background-color: #e4e4e4;
+}
