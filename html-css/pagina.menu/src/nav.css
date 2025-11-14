@@ -183,3 +183,57 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+/* ===== PAGAMENTO NO MODAL ===== */
+#pagamentoContainer {
+    margin-top: 15px;
+    padding: 10px;
+    background: #ffffff10;
+    border-radius: 10px;
+}
+
+#pagamentoContainer h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.opcao-pagamento {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.opcao-pagamento input[type="radio"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#pagamentoSelecionado {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #b8a712; /* mesma paleta dourada */
+}
+
+/* ===== BOTÃO FINALIZAR PEDIDO ===== */
+#btnFinalizarPedido {
+    width: 90%;
+    margin: 20px auto 0 auto;
+    display: block;
+
+    padding: 12px;
+    background-color: #ffb347;   /* cor quente harmoniza com seu tema */
+    border: none;
+    border-radius: 10px;
+
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#btnFinalizarPedido:hover {
+    background-color: #ff9933;
+}

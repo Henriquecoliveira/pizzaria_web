@@ -1,15 +1,15 @@
-// server
+// server.ts
 // ele serve para criar o servidor que fará a comunicação entre o frontend + backend + banco de dados
 
 // imports de bibliotecas externas
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
-import path, { resolve } from 'path'; // manipulação de caminhos
-import { fileURLToPath } from "url"; // permite obter o __dirname no ES Modules
+import path, { resolve } from 'path';
+import { fileURLToPath } from "url";
 
 // imports locais
 import pizzaRoutes from './routes/pizzaRoutes.js';
+import loginRoutes from './routes/loginRoutes.js';
 
 const app = express();
 
@@ -28,20 +28,20 @@ app.use(cors({
 app.options(/.*/, cors());
 
 // converte o corpo das requisições para JSON
-app.use(bodyParser.json());
+// (❗ bodyParser removido porque express.json já faz isso)
+app.use(express.json());
 
-// ✅ Define o caminho correto e absoluto da pasta uploads
+// configura o express para entender dados enviados via formulário
+app.use(express.urlencoded({ extended: true }));
+
+// Define o caminho correto da pasta uploads
 const uploadPath = resolve(__dirname, "..", "uploads");
-
-// Log para depurar se o Express realmente está apontando para a pasta correta
 console.log("📁 Servindo uploads de:", uploadPath);
 
-// ✅ Torna a pasta uploads acessível via navegador
-// Exemplos que devem funcionar:
-// http://localhost:3000/uploads/NOME_DA_IMAGEM.png
+// Torna a pasta uploads acessível via navegador
 app.use("/uploads", express.static(uploadPath));
 
-// ✅ Ajusta regras do CSP para não bloquear imagens carregadas do servidor
+// Ajusta regras do CSP para permitir imagens
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
@@ -50,11 +50,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Evita erro de favicon 404 no console do navegador
+// Evita erro de favicon no console
 app.get("/favicon.ico", (req, res) => res.status(204));
 
-// usa as rotas relacionadas a pizzas (cadastro, delete, etc)
+// usa as rotas relacionadas a pizzas
 app.use('/pizza', pizzaRoutes);
+
+// usa as rotas relacionadas a login  (COMPATIBILIDADE GARANTIDA)
+app.use('/login', loginRoutes);
 
 // inicia o servidor
 const PORT = process.env.PORT || 3000;

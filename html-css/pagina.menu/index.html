@@ -41,6 +41,32 @@
                     <h3>Seus pedidos!</h3>
                     <ul id="listaRecibo"></ul>
                     <p id="totalRecibo"></p>
+                                            <!-- ================= PAGAMENTO ================= -->
+                        <div id="pagamentoContainer">
+                            <h3>Forma de pagamento</h3>
+
+                            <label class="opcao-pagamento">
+                                <input type="radio" name="pagamento" value="Dinheiro">
+                                Dinheiro
+                            </label>
+
+                            <label class="opcao-pagamento">
+                                <input type="radio" name="pagamento" value="Débito">
+                                Débito
+                            </label>
+
+                            <label class="opcao-pagamento">
+                                <input type="radio" name="pagamento" value="Crédito">
+                                Crédito
+                            </label>
+
+                            <p id="pagamentoSelecionado"></p>
+
+                            <!-- Botão Finalizar Pedido -->
+                            <button id="btnFinalizarPedido">Finalizar pedido</button>
+
+                        </div>
+
                 </div>
             </div>
 
@@ -77,6 +103,9 @@
     </div>
 
     <!-- ================= SCRIPTS ================= -->
+     // 🔹 Script de autenticação (login/logout)
+     <script src="/js/auth.js"></script>
+
     <!-- 🔹 Script principal com funções do modal e login -->
     <script src="script.js"></script>
 

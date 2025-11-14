@@ -50,3 +50,63 @@ function atualizarRecibo() {
   // mostra o total formatado
   totalRecibo.textContent = `Total: R$ ${total.toFixed(2)}`;
 }
+
+// ================= PAGAMENTO =================
+
+// quando o usuário selecionar forma de pagamento
+function configurarPagamento() {
+  const radios = document.querySelectorAll('input[name="pagamento"]');
+  const display = document.getElementById('pagamentoSelecionado');
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      display.textContent = "Pagamento: " + radio.value;
+    });
+  });
+}
+
+// garantir que a seleção aparece ao abrir o modal (caso já tenha selecionado antes)
+function atualizarPagamentoSelecionado() {
+  const selecionado = document.querySelector('input[name="pagamento"]:checked');
+  const display = document.getElementById('pagamentoSelecionado');
+
+  if (selecionado) {
+    display.textContent = "Pagamento: " + selecionado.value;
+  } else {
+    display.textContent = "";
+  }
+}
+
+// CHAMAR sempre que abrir o modal
+const abrirModal_original = abrirModal;
+abrirModal = function () {
+  abrirModal_original();
+  configurarPagamento();
+  atualizarPagamentoSelecionado();
+};
+
+// ================= FINALIZAR PEDIDO =================
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("btnFinalizarPedido");
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const metodo = document.querySelector('input[name="pagamento"]:checked');
+      const total = document.getElementById("totalRecibo").textContent;
+
+      if (!metodo) {
+        alert("Selecione uma forma de pagamento antes de finalizar o pedido!");
+        return;
+      }
+
+      alert(
+        "Pedido finalizado!\n" +
+        total + "\n" +
+        "Pagamento: " + metodo.value
+      );
+
+      // 🔥 RECARREGA A PÁGINA APÓS CONFIRMAR
+      location.reload();
+    });
+  }
+});
