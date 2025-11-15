@@ -1,83 +1,145 @@
 // ts/routes/pedidoRoutes.ts
-import { Router } from "express";
+// (substitua TODO o conteúdo atual por este)
+
+import express from "express";
 import sql from "mssql";
 import { getPool } from "../db_pizzaria.js";
 
-const router = Router();
+const router = express.Router();
 
-/**
- * Body esperado:
- * {
- *   usuarioId: number,
- *   formaPagamento: string,
- *   endereco: string,
- *   itens: [
- *     { alimento: string, preco: number },
- *     ...
- *   ]
- * }
- */
+/*
+  ===========================================
+  ============== FINALIZAR PEDIDO ===========
+  ===========================================
+*/
 router.post("/finalizar", async (req, res) => {
-  const { usuarioId, formaPagamento, endereco, itens } = req.body;
+  console.log("POST /pedido/finalizar - body:", JSON.stringify(req.body));
 
-  if (!usuarioId) {
-    return res.status(401).json({ error: "Usuário não autenticado." });
-  }
-  if (!formaPagamento || !endereco || !Array.isArray(itens) || itens.length === 0) {
-    return res.status(400).json({ error: "Dados do pedido incompletos." });
-  }
-
-  let pool;
   try {
-    pool = await getPool();
-  } catch (err) {
-    console.error("Erro ao obter pool:", err);
-    return res.status(500).json({ error: "Erro de conexão com o banco." });
-  }
+    const { usuarioId, formaPagamento, endereco, itens } = req.body ?? {};
 
-  const transaction = new sql.Transaction(pool);
-  try {
+    // ================= VALIDAÇÕES =================
+    if (!usuarioId)
+      return res.status(400).json({ sucesso: false, mensagem: "usuarioId é obrigatório." });
+
+    if (!formaPagamento)
+      return res.status(400).json({ sucesso: false, mensagem: "formaPagamento é obrigatório." });
+
+    if (!itens || !Array.isArray(itens) || itens.length === 0)
+      return res.status(400).json({
+        sucesso: false,
+        mensagem: "itens é obrigatório e deve conter pelo menos 1 item."
+      });
+
+    // Normaliza/valida itens
+    const itensValidos = [];
+    for (const it of itens) {
+      const id = Number(it.id);           // <-- ID da pizza
+      const quantidade = Number(it.quantidade);
+      const preco = Number(it.preco);
+
+      if (!id || quantidade <= 0 || Number.isNaN(preco)) {
+        return res.status(400).json({
+          sucesso: false,
+          mensagem: "Item inválido no array 'itens': " + JSON.stringify(it)
+        });
+      }
+
+      itensValidos.push({ id, quantidade, preco });
+    }
+
+    // ================= CONEXÃO =================
+    const pool = await getPool();
+    const transaction = new sql.Transaction(pool);
+
     await transaction.begin();
 
-    // Inserir PEDIDO e retornar PEDIDO_ID usando OUTPUT INSERTED.PEDIDO_ID
-    const reqInsert = new sql.Request(transaction);
-    reqInsert.input("usuarioId", sql.Int, usuarioId);
-    reqInsert.input("forma", sql.VarChar(30), formaPagamento);
-    reqInsert.input("endereco", sql.VarChar(255), endereco);
-
-    const insertPedidoQuery = `
-      INSERT INTO PEDIDO (USUARIO_ID, FORMA_DE_PAGAMENTO, ENDERECO)
-      OUTPUT INSERTED.PEDIDO_ID
-      VALUES (@usuarioId, @forma, @endereco)
-    `;
-    const pedidoResult = await reqInsert.query(insertPedidoQuery);
-
-    const pedidoId = pedidoResult.recordset?.[0]?.PEDIDO_ID;
-    if (!pedidoId) throw new Error("Não foi possível recuperar o ID do pedido.");
-
-    // Inserir os itens
-    for (const item of itens) {
-      const r = new sql.Request(transaction);
-      r.input("pedidoId", sql.Int, pedidoId);
-      r.input("alimento", sql.VarChar(40), item.alimento);
-      // PRECO definido DECIMAL(10,2) no schema
-      r.input("preco", sql.Decimal(10,2), item.preco);
-      await r.query(
-        `INSERT INTO PEDIDO_ITENS (PEDIDO_ID, ALIMENTO, PRECO)
-         VALUES (@pedidoId, @alimento, @preco)`
-      );
-    }
-
-    await transaction.commit();
-    return res.json({ sucesso: true, pedidoId });
-  } catch (err) {
-    console.error("Erro ao finalizar pedido:", err);
     try {
+      // ===========================================================
+      // 1) INSERIR PEDIDO (compatível com SEU BANCO)
+      // ===========================================================
+
+      const reqPedido = new sql.Request(transaction);
+
+      reqPedido.input("USUARIO_ID", sql.Int, usuarioId);
+      reqPedido.input("FORMA_DE_PAGAMENTO", sql.VarChar(30), formaPagamento);
+      reqPedido.input("ENDERECO", sql.VarChar(255), endereco ?? "");
+
+      // Só existem estas colunas:
+      // PEDIDO_ID, USUARIO_ID, DATA_HORA_PEDIDO, FORMA_DE_PAGAMENTO, ENDERECO
+      const insertPedidoSql = `
+        INSERT INTO PEDIDO (USUARIO_ID, FORMA_DE_PAGAMENTO, ENDERECO)
+        OUTPUT INSERTED.PEDIDO_ID
+        VALUES (@USUARIO_ID, @FORMA_DE_PAGAMENTO, @ENDERECO)
+      `;
+
+      const resultPedido = await reqPedido.query(insertPedidoSql);
+
+      const pedidoId = resultPedido?.recordset?.[0]?.PEDIDO_ID;
+
+      if (!pedidoId)
+        throw new Error("Não foi possível obter PEDIDO_ID após o INSERT.");
+
+      // ===========================================================
+      // 2) INSERIR ITENS DO PEDIDO (compatível com SEU BANCO)
+      // ===========================================================
+      // Tabela PEDIDO_ITENS possui:
+      // ITEM_ID, PEDIDO_ID, ALIMENTO, PRECO
+
+      for (const item of itensValidos) {
+        const reqItem = new sql.Request(transaction);
+
+        reqItem.input("PEDIDO_ID", sql.Int, pedidoId);
+
+        // Aqui buscamos o nome da pizza pela PIZZA_ID
+        // porque no seu banco PEDIDO_ITENS usa "ALIMENTO"
+        const pizza = await pool
+          .request()
+          .input("ID", sql.Int, item.id)
+          .query("SELECT PIZZA FROM PIZZA WHERE PIZZA_ID = @ID");
+
+        const nomePizza = pizza.recordset?.[0]?.PIZZA;
+
+        if (!nomePizza)
+          throw new Error(`PIZZA não encontrada para ID=${item.id}`);
+
+        reqItem.input("ALIMENTO", sql.VarChar(40), nomePizza);
+        reqItem.input("PRECO", sql.Decimal(10, 2), item.preco * item.quantidade);
+
+        const insertItemSql = `
+          INSERT INTO PEDIDO_ITENS (PEDIDO_ID, ALIMENTO, PRECO)
+          VALUES (@PEDIDO_ID, @ALIMENTO, @PRECO)
+        `;
+
+        await reqItem.query(insertItemSql);
+      }
+
+      // Finaliza transação
+      await transaction.commit();
+
+      return res.json({
+        sucesso: true,
+        mensagem: "Pedido salvo com sucesso!",
+        pedidoId
+      });
+
+    } catch (innerErr) {
+      console.error("Erro dentro da transação:", innerErr);
       await transaction.rollback();
-    } catch (rbErr) {
-      console.error("Erro ao rollback:", rbErr);
+      return res.status(500).json({
+        sucesso: false,
+        mensagem: "Erro ao salvar pedido (transação).",
+        erro: String(innerErr)
+      });
     }
-    return res.status(500).json({ error: "Erro ao salvar pedido." });
+
+  } catch (erro) {
+    console.error("Erro ao finalizar pedido (externo):", erro);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro interno ao salvar o pedido.",
+      erro: String(erro)
+    });
   }
 });
 

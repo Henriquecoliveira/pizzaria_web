@@ -10,8 +10,9 @@ const config = {
     port: Number(process.env.DB_PORT) || 1433,
     options: {
         encrypt: false, // para conexões locais, geralmente é false
+        trustServerCertificate: true // NECESSÁRIO para evitar erros SSL no SQL Server local
     },
-    // define o tammanho da poll de conexões
+    // define o tamanho da pool de conexões
     // basicamente para não haver várias aberturas desnecessárias de conexão ao banco
     // já é delimitado um máximo de conexões simultâneas que o programa "empresta" ao usuário
     pool: {
@@ -23,8 +24,10 @@ const config = {
 let pool = null; // guarda a pool de conexões
 // abre (ou reusa) a pool de conexões
 export async function getPool() {
-    if (pool && pool.connected)
+    if (pool && pool.connected) {
         return pool; // verifica se já existe uma pool & se ela está conectada
+    }
+    // IMPORTANTE: sql.connect() retorna uma ConnectionPool, não um objeto "sql"
     pool = await sql.connect(config);
     return pool; // retorna a conexão para quem chamou a função
 }

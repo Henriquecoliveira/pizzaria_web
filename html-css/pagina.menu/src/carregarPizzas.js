@@ -6,15 +6,23 @@ async function carregarPizzas() {
 
     pizzas.forEach(pizza => {
         container.innerHTML += `
-        <div class="pizza">
-            <img src="http://localhost:3000/uploads/${pizza.IMAGEM_URL}" class="ImagensP" alt="${pizza.PIZZA}">
+        <div class="pizza" 
+             data-id="${pizza.PIZZA_ID}" 
+             data-preco="${pizza.PRECO}">
+             
+            <img src="http://localhost:3000/uploads/${pizza.IMAGEM_URL}" 
+                 class="ImagensP" 
+                 alt="${pizza.PIZZA}">
+            
             <h2>${pizza.PIZZA}</h2>
             <p>${pizza.INGREDIENTES}</p>
             <span class="price">R$ ${pizza.PRECO.toFixed(2)}</span>
+
             <div class="acoes">
                 <button class="botao">
                     <i class="fa-solid fa-basket-shopping"></i>
                 </button>
+
                 <div class="contador-container">
                     <button class="diminuir">−</button>
                     <span class="contador">0</span>
@@ -30,7 +38,8 @@ async function carregarPizzas() {
         const diminuir = card.querySelector(".diminuir");
         const contador = card.querySelector(".contador");
 
-        let valor = 0;
+        // 🔥 valor REAL sincronizado com DOM
+        let valor = Number(contador.textContent);
 
         botao.addEventListener("click", () => {
             valor++;
@@ -43,7 +52,9 @@ async function carregarPizzas() {
                 valor--;
                 contador.textContent = valor;
             }
-            if (valor === 0) contador.classList.remove("ativo");
+            if (valor === 0) {
+                contador.classList.remove("ativo");
+            }
         });
     });
 }

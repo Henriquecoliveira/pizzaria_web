@@ -1,7 +1,7 @@
 // Essa parte do código serve para fazer a conexão com o banco de dados SQL Server
 // usando o pacote 'mssql'
 
-import sql, { ConnectionPool} from 'mssql'; 
+import sql, { ConnectionPool } from 'mssql';
 
 // configuração da conexão ao banco de dados
 const config: sql.config = {
@@ -12,9 +12,10 @@ const config: sql.config = {
   port: Number(process.env.DB_PORT) || 1433,
   options: {
     encrypt: false, // para conexões locais, geralmente é false
+    trustServerCertificate: true // NECESSÁRIO para evitar erros SSL no SQL Server local
   },
 
-  // define o tammanho da poll de conexões
+  // define o tamanho da pool de conexões
   // basicamente para não haver várias aberturas desnecessárias de conexão ao banco
   // já é delimitado um máximo de conexões simultâneas que o programa "empresta" ao usuário
   pool: {
@@ -28,8 +29,13 @@ let pool: ConnectionPool | null = null; // guarda a pool de conexões
 
 // abre (ou reusa) a pool de conexões
 export async function getPool(): Promise<ConnectionPool> {
-  if (pool && pool.connected) return pool; // verifica se já existe uma pool & se ela está conectada
+  if (pool && pool.connected) {
+    return pool; // verifica se já existe uma pool & se ela está conectada
+  }
+
+  // IMPORTANTE: sql.connect() retorna uma ConnectionPool, não um objeto "sql"
   pool = await sql.connect(config);
+
   return pool; // retorna a conexão para quem chamou a função
 }
 
@@ -40,5 +46,3 @@ export async function fecharPool() {
     pool = null;
   }
 }
-
-

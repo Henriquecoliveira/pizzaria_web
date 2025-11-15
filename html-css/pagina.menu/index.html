@@ -27,66 +27,68 @@
         </div>
 
         <ul class="menu">
-            <!-- 🔹 Mochila: botão que abre o pop-up -->
+            <!-- Mochila -->
             <li class="imagem_mochila">
                 <a href="#" onclick="abrirModal(); return false;">
                     <img src="src/assets/navBarImage/Bag.png" alt="Abrir modal">
                 </a>
             </li>
 
-            <!-- 🔹 MODAL (sacola de pedidos) -->
-            <div id="minhaModal" class="modal">
-                <div class="modal-conteudo">
-                    <span class="fechar" onclick="fecharModal()">&times;</span>
-                    <h3>Seus pedidos!</h3>
-                    <ul id="listaRecibo"></ul>
-                    <p id="totalRecibo"></p>
-                        <!-- ================= PAGAMENTO ================= -->
-                        <div id="pagamentoContainer">
-                            <h3>Forma de pagamento</h3>
-
-                            <label class="opcao-pagamento">
-                                <input type="radio" name="pagamento" value="Dinheiro">
-                                Dinheiro
-                            </label>
-
-                            <label class="opcao-pagamento">
-                                <input type="radio" name="pagamento" value="Débito">
-                                Débito
-                            </label>
-
-                            <label class="opcao-pagamento">
-                                <input type="radio" name="pagamento" value="Crédito">
-                                Crédito
-                            </label>
-
-                            <p id="pagamentoSelecionado"></p>
-
-                            <!-- Botão Finalizar Pedido -->
-                            <button id="btnFinalizarPedido">Finalizar pedido</button>
-
-                        </div>
-                        <!-- ÁREA DE ENDEREÇO -->
-                        <div class="campo-endereco">
-                            <label for="enderecoComentario" class="label-endereco">
-                                Digite sua cidade, bairro, rua e número da residência:
-                            </label>
-
-                            <textarea id="enderecoComentario"
-                                placeholder="Ex: Cidade X, Bairro Y, Rua Z, Nº 123"
-                                class="textarea-endereco"></textarea>
-                        </div>
-
-                </div>
-            </div>
-
-            <!-- 🔹 LINKS DO NAV -->
+            <!-- LINKS DO NAV -->
             <li><a href="/html-css/pagina.eventos/index.html">Promo</a></li>
             <li><a href="/html-css/pagina.Contato/index.html">Contato</a></li>
             <li><a href="/html-css/pagina_administrativa/index.html">Adicionar pizzas</a></li>
             <li><button id="login-btn">Login</button></li>
         </ul>
     </nav>
+
+    <!-- ================= MODAL (agora no lugar certo) ================= -->
+    <div id="minhaModal" class="modal">
+        <div class="modal-conteudo">
+
+            <span class="fechar" onclick="fecharModal()">&times;</span>
+            <h3>Seus pedidos!</h3>
+
+            <ul id="listaRecibo"></ul>
+            <p id="totalRecibo"></p>
+
+            <!-- ================= PAGAMENTO ================= -->
+            <div id="pagamentoContainer">
+                <h3>Forma de pagamento</h3>
+
+                <label class="opcao-pagamento">
+                    <input type="radio" name="pagamento" value="Dinheiro">
+                    Dinheiro
+                </label>
+
+                <label class="opcao-pagamento">
+                    <input type="radio" name="pagamento" value="Débito">
+                    Débito
+                </label>
+
+                <label class="opcao-pagamento">
+                    <input type="radio" name="pagamento" value="Crédito">
+                    Crédito
+                </label>
+
+                <p id="pagamentoSelecionado"></p>
+
+                <button id="btnFinalizarPedido">Finalizar pedido</button>
+            </div>
+
+            <!-- ================= ENDEREÇO ================= -->
+            <div class="campo-endereco">
+                <label for="enderecoComentario" class="label-endereco">
+                    Digite sua cidade, bairro, rua e número da residência:
+                </label>
+
+                <textarea id="enderecoComentario"
+                    placeholder="Ex: Cidade X, Bairro Y, Rua Z, Nº 123"
+                    class="textarea-endereco"></textarea>
+            </div>
+
+        </div>
+    </div>
 
     <!-- ================= TÍTULO PAGE ================= -->
     <div class="menu-content">
@@ -108,19 +110,13 @@
 
     <!-- ================= GALERIA DE PIZZAS ================= -->
     <div class="pizza-gallery">
-        <!-- 🔹 AQUI AS PIZZAS DO BANCO SERÃO INSERIDAS -->
         <div id="listaPizzas"></div>
     </div>
 
     <!-- ================= SCRIPTS ================= -->
-    
-    <!-- 🔹 Script principal com funções do modal e login -->
     <script src="script.js"></script>
-    
-    <!-- 🔹 Script que carrega dinamicamente as pizzas do backend -->
     <script src="src/carregarPizzas.js"></script>
-    
-    <!-- 🔹 Script de autenticação (login/logout) -->
     <script src="auth.js"></script>
+
 </body>
 </html>
