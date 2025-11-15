@@ -13,12 +13,18 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
 
         const dados = await resposta.json();
 
-        if (resposta.ok) {
-            alert("Login realizado com sucesso!");
-            window.location.href = "../../pagina.menu/index.html";
-        } else {
-            alert(dados.error || "Credenciais inválidas.");
-        }
+    if (resposta.ok) {
+        // SALVA O LOGIN
+        sessionStorage.setItem("usuarioLogado", JSON.stringify({
+            login: login,
+            id: dados.id || null
+        }));
+
+        alert("Login realizado com sucesso!");
+        window.location.href = "../../pagina.menu/index.html";
+    }
+
+
 
     } catch (erro) {
         alert("Erro ao conectar ao servidor.");

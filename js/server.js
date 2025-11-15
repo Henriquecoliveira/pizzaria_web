@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 // imports locais
 import pizzaRoutes from './routes/pizzaRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
+import pedidoRoutes from './routes/pedidoRoutes.js';
 const app = express();
 // ===== DEFINE __dirname (necessário para resolver caminhos corretamente) =====
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,8 @@ const uploadPath = resolve(__dirname, "..", "uploads");
 console.log("📁 Servindo uploads de:", uploadPath);
 // Torna a pasta uploads acessível via navegador
 app.use("/uploads", express.static(uploadPath));
+// Torna a pasta html-css acessível via navegador
+app.use('/html-css', express.static(path.join(__dirname, '../html-css')));
 // Ajusta regras do CSP para permitir imagens
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "default-src 'self' http: https: data: blob: 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:;");
@@ -41,6 +44,8 @@ app.get("/favicon.ico", (req, res) => res.status(204));
 app.use('/pizza', pizzaRoutes);
 // usa as rotas relacionadas a login  (COMPATIBILIDADE GARANTIDA)
 app.use('/login', loginRoutes);
+// usa as rotas relacionadas a pedidos
+app.use('/pedido', pedidoRoutes);
 // inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

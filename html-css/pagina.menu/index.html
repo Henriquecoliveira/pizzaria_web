@@ -41,7 +41,7 @@
                     <h3>Seus pedidos!</h3>
                     <ul id="listaRecibo"></ul>
                     <p id="totalRecibo"></p>
-                                            <!-- ================= PAGAMENTO ================= -->
+                        <!-- ================= PAGAMENTO ================= -->
                         <div id="pagamentoContainer">
                             <h3>Forma de pagamento</h3>
 
@@ -65,6 +65,16 @@
                             <!-- Botão Finalizar Pedido -->
                             <button id="btnFinalizarPedido">Finalizar pedido</button>
 
+                        </div>
+                        <!-- ÁREA DE ENDEREÇO -->
+                        <div class="campo-endereco">
+                            <label for="enderecoComentario" class="label-endereco">
+                                Digite sua cidade, bairro, rua e número da residência:
+                            </label>
+
+                            <textarea id="enderecoComentario"
+                                placeholder="Ex: Cidade X, Bairro Y, Rua Z, Nº 123"
+                                class="textarea-endereco"></textarea>
                         </div>
 
                 </div>
@@ -103,14 +113,14 @@
     </div>
 
     <!-- ================= SCRIPTS ================= -->
-     // 🔹 Script de autenticação (login/logout)
-     <script src="/js/auth.js"></script>
-
+    
     <!-- 🔹 Script principal com funções do modal e login -->
     <script src="script.js"></script>
-
+    
     <!-- 🔹 Script que carrega dinamicamente as pizzas do backend -->
     <script src="src/carregarPizzas.js"></script>
-
+    
+    <!-- 🔹 Script de autenticação (login/logout) -->
+    <script src="auth.js"></script>
 </body>
 </html>
