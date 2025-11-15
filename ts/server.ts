@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import pizzaRoutes from './routes/pizzaRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
+import reportRoutes from "./routes/reportRoutes.js";
 
 
 const app = express();
@@ -66,6 +67,9 @@ app.use('/login', loginRoutes);
 
 // usa as rotas relacionadas a pedidos
 app.use('/pedido', pedidoRoutes);
+
+// usa as rotas relacionadas a relatórios
+app.use("/relatorio", reportRoutes);
 
 // inicia o servidor
 const PORT = process.env.PORT || 3000;

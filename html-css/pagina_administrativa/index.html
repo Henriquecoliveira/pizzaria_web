@@ -4,9 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administração - Steve Pizza</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="./assets/admin.css" />
+
+    <!-- Script JS principal da página (DOM só roda depois do HTML) -->
+    <script src="./script.js" defer></script>
+
+    <!--🔹 Script de autenticação (login/logout) -->
+    <script src="/js/auth.js" defer></script>
 </head>
+
 <body>
+
     <!-- HEADER -->
     <header class="header">
         <div class="logo-wrapper">
@@ -27,6 +37,11 @@
         <button id="btn-add" class="action-btn">Adicionar Pizza</button>
         <button id="btn-remove" class="action-btn remove">Remover Pizza</button>
     </section>
+
+    <div class="actions reports">
+        <button id="btn-dia">Relatório do dia</button>
+        <button id="btn-mes">Relatório do mês</button>
+    </div>
 
     <!-- MODAL ADICIONAR -->
     <div id="modalAdd" class="modal">
@@ -49,30 +64,68 @@
 
                 <button type="submit" class="submit">Salvar</button>
             </form>
-
         </div>
     </div>
 
-    // 🔹 Script de autenticação (login/logout)
-     <script src="/js/auth.js"></script>
+    <!-- MODAL RELATÓRIO DO DIA -->
+    <div id="modalDia" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="modalDia">&times;</span>
+            <h2>Relatório do dia</h2>
 
-    <script>
+            <table class="tabela-relatorio">
+                <thead>
+                    <tr>
+                        <th>Pedido ID</th>
+                        <th>Usuário</th>
+                        <th>Data/Hora</th>
+                        <th>Endereço</th>
+                        <th>Pagamento</th>
+                        <th>Item</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaDiaBody"></tbody>
+            </table>
+        </div>
+    </div>
 
-    // CADASTRAR NOVA PIZZA
-    document.getElementById("pizzaForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
+    <!-- MODAL RELATÓRIO DO MÊS -->
+    <div id="modalMes" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="modalMes">&times;</span>
+            <h2>Relatório do mês</h2>
 
-        const formData = new FormData(e.target);
+            <label for="mesSelect">Escolha o mês:</label>
+            <select id="mesSelect">
+                <option value="1">1 - Janeiro</option>
+                <option value="2">2 - Fevereiro</option>
+                <option value="3">3 - Março</option>
+                <option value="4">4 - Abril</option>
+                <option value="5">5 - Maio</option>
+                <option value="6">6 - Junho</option>
+                <option value="7">7 - Julho</option>
+                <option value="8">8 - Agosto</option>
+                <option value="9">9 - Setembro</option>
+                <option value="10">10 - Outubro</option>
+                <option value="11">11 - Novembro</option>
+                <option value="12">12 - Dezembro</option>
+            </select>
 
-        const res = await fetch("http://localhost:3000/pizza", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await res.json();
-        alert(data.message || data.error);
-    });
-    </script>
+            <table class="tabela-relatorio">
+                <thead>
+                    <tr>
+                        <th>Pedido ID</th>
+                        <th>Usuário</th>
+                        <th>Data/Hora</th>
+                        <th>Endereço</th>
+                        <th>Pagamento</th>
+                        <th>Item</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaMesBody"></tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- MODAL REMOVER -->
     <div id="modalRemove" class="modal">
@@ -87,44 +140,8 @@
                 <input type="text" id="pizzaNome" />
                 <button type="submit" class="submit remove">Remover</button>
             </form>
-
         </div>
     </div>
 
-    <script>
-    // REMOVER PIZZA
-    document.getElementById("formRemove").addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const id = document.getElementById("pizzaId").value;
-        const nome = document.getElementById("pizzaNome").value;
-
-        const resp = await fetch("http://localhost:3000/pizza", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id, nome })
-        });
-
-        const result = await resp.json();
-        alert(result.message || result.error);
-    });
-    </script>
-
-
-    <script>
-        // abrir modal
-        document.getElementById("btn-add").onclick = () => document.getElementById("modalAdd").style.display = "flex";
-        document.getElementById("btn-remove").onclick = () => document.getElementById("modalRemove").style.display = "flex";
-
-        // fechar modal
-        document.querySelectorAll(".close").forEach(btn => {
-            btn.onclick = () => document.getElementById(btn.dataset.close).style.display = "none";
-        });
-
-        // fechar clicando fora
-        window.onclick = e => {
-            if (e.target.classList.contains("modal")) e.target.style.display = "none";
-        };
-    </script>
 </body>
 </html>
