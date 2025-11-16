@@ -34,6 +34,22 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
         sessionStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
         alert("Login realizado com sucesso!");
+
+        // ======= REDIRECIONAMENTO DO ADMIN =======
+        // ADMIN POR EMAIL
+        const isAdminEmail = usuario.EMAIL === "admin@gmail.com";
+
+        // ADMIN POR USUÁRIO + SENHA DIGITADOS
+        const isAdminCredenciais = 
+            usuario.USUARIO?.toLowerCase() === "admin" && senha === "admin123";
+
+        if (isAdminEmail || isAdminCredenciais) {
+            window.location.href = "../../pagina_administrativa/index.html";
+            return;
+        }
+        // =========================================
+
+        // REDIRECIONAMENTO PADRÃO PARA CLIENTES
         window.location.href = "../../pagina.menu/index.html";
 
     } catch (erro) {

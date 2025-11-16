@@ -16,7 +16,9 @@ router.get("/dia", async (req, res) => {
                 P.DATA_HORA_PEDIDO,
                 P.ENDERECO,
                 P.FORMA_DE_PAGAMENTO,
-                I.ALIMENTO
+                I.ALIMENTO,
+                I.PRECO,
+                SUM(I.PRECO) OVER (PARTITION BY P.PEDIDO_ID) AS TOTAL_DO_PEDIDO
             FROM PEDIDO P
             INNER JOIN PEDIDO_ITENS I ON I.PEDIDO_ID = P.PEDIDO_ID
             WHERE CONVERT(date, P.DATA_HORA_PEDIDO) = CONVERT(date, GETDATE())
@@ -48,7 +50,9 @@ router.get("/mes/:mes", async (req, res) => {
                     P.DATA_HORA_PEDIDO,
                     P.ENDERECO,
                     P.FORMA_DE_PAGAMENTO,
-                    I.ALIMENTO
+                    I.ALIMENTO,
+                    I.PRECO,
+                    SUM(I.PRECO) OVER (PARTITION BY P.PEDIDO_ID) AS TOTAL_DO_PEDIDO
                 FROM PEDIDO P
                 INNER JOIN PEDIDO_ITENS I ON I.PEDIDO_ID = P.PEDIDO_ID
                 WHERE MONTH(P.DATA_HORA_PEDIDO) = @mes

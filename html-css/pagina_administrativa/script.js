@@ -34,6 +34,41 @@ document.getElementById("btn-remove").addEventListener("click", () => {
 
 
 // ============================================================
+// === FUNÇÃO AUXILIAR → calcular item mais pedido e total ===
+// ============================================================
+function gerarEstatisticas(dados) {
+    if (!dados.length) {
+        return {
+            itemMaisPedido: "Nenhum",
+            total: 0
+        };
+    }
+
+    // Calculando repetições
+    const contagem = {};
+    let total = 0;
+
+    dados.forEach(item => {
+        // conta o item
+        contagem[item.ALIMENTO] = (contagem[item.ALIMENTO] || 0) + 1;
+
+        // soma o preço vindo do banco
+        if (item.PRECO) {
+            total += Number(item.PRECO);
+        }
+    });
+
+    // item mais pedido
+    let itemMaisPedido = Object.entries(contagem).sort((a, b) => b[1] - a[1])[0][0];
+
+    return {
+        itemMaisPedido,
+        total
+    };
+}
+
+
+// ============================================================
 // === RELATÓRIO DO DIA ===
 // ============================================================
 document.getElementById("btn-dia").addEventListener("click", () => {
@@ -43,6 +78,7 @@ document.getElementById("btn-dia").addEventListener("click", () => {
 
 async function carregarRelatorioDia() {
     const tabela = document.getElementById("tabelaDiaBody");
+
     tabela.innerHTML = "<tr><td colspan='6'>Carregando...</td></tr>";
 
     try {
@@ -51,6 +87,7 @@ async function carregarRelatorioDia() {
 
         if (!dados.length) {
             tabela.innerHTML = "<tr><td colspan='6'>Nenhum pedido hoje.</td></tr>";
+            atualizarResumoDia("Nenhum", 0);
             return;
         }
 
@@ -62,13 +99,40 @@ async function carregarRelatorioDia() {
                 <td>${item.ENDERECO}</td>
                 <td>${item.FORMA_DE_PAGAMENTO}</td>
                 <td>${item.ALIMENTO}</td>
+                <td>R$ ${Number(item.TOTAL_DO_PEDIDO).toFixed(2)}</td>
             </tr>
         `).join("");
+
+
+        const { itemMaisPedido, total } = gerarEstatisticas(dados);
+        atualizarResumoDia(itemMaisPedido, total);
 
     } catch (err) {
         tabela.innerHTML = "<tr><td colspan='6'>Erro ao carregar relatório.</td></tr>";
     }
 }
+
+// insere os dados no modal do dia
+function atualizarResumoDia(item, total) {
+    let box = document.getElementById("resumoDia");
+
+    if (!box) {
+        const modal = document.querySelector("#modalDia .modal-content");
+        box = document.createElement("div");
+        box.id = "resumoDia";
+        box.style.margin = "15px 0";
+        box.style.padding = "10px";
+        box.style.background = "#f2f2f2";
+        box.style.borderRadius = "6px";
+        modal.insertBefore(box, modal.children[2]); // aparece logo abaixo do título
+    }
+
+    box.innerHTML = `
+        <strong>Item mais pedido:</strong> ${item} <br>
+        <strong>Total arrecadado:</strong> R$ ${total.toFixed(2)}
+    `;
+}
+
 
 
 // ============================================================
@@ -95,6 +159,7 @@ async function carregarRelatorioMes() {
 
         if (!dados.length) {
             tabela.innerHTML = "<tr><td colspan='6'>Nenhum pedido neste mês.</td></tr>";
+            atualizarResumoMes("Nenhum", 0);
             return;
         }
 
@@ -106,13 +171,39 @@ async function carregarRelatorioMes() {
                 <td>${item.ENDERECO}</td>
                 <td>${item.FORMA_DE_PAGAMENTO}</td>
                 <td>${item.ALIMENTO}</td>
+                <td>R$ ${Number(item.TOTAL_DO_PEDIDO).toFixed(2)}</td>
             </tr>
         `).join("");
+
+        const { itemMaisPedido, total } = gerarEstatisticas(dados);
+        atualizarResumoMes(itemMaisPedido, total);
 
     } catch (err) {
         tabela.innerHTML = "<tr><td colspan='6'>Erro ao carregar relatório.</td></tr>";
     }
 }
+
+// insere os dados no modal do mês
+function atualizarResumoMes(item, total) {
+    let box = document.getElementById("resumoMes");
+
+    if (!box) {
+        const modal = document.querySelector("#modalMes .modal-content");
+        box = document.createElement("div");
+        box.id = "resumoMes";
+        box.style.margin = "15px 0";
+        box.style.padding = "10px";
+        box.style.background = "#f2f2f2";
+        box.style.borderRadius = "6px";
+        modal.insertBefore(box, modal.children[3]); 
+    }
+
+    box.innerHTML = `
+        <strong>Item mais pedido:</strong> ${item} <br>
+        <strong>Total arrecadado:</strong> R$ ${total.toFixed(2)}
+    `;
+}
+
 
 
 // ============================================================
@@ -165,4 +256,12 @@ document.getElementById("formRemove").addEventListener("submit", async (e) => {
     } catch (error) {
         alert("Erro ao remover pizza.");
     }
+});
+
+
+// ============================================================
+// === BOTÃO DE LOGIN NA PÁGINA ADMINISTRATIVA ===
+// ============================================================
+document.getElementById('login-btn').addEventListener('click', () => {
+    window.location.href = '../pagina.login/login/index.html';
 });
