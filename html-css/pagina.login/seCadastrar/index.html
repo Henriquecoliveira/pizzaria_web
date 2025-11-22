@@ -15,14 +15,37 @@
                 <input placeholder="E-mail" type="email" name="email" id="email">
                 <i class="bx bxs-user"></i>
             </div>
-                                  <div class="input-box">
+
+                <div class="input-box">
                 <input placeholder="usuario" type="text" name="usuario" id="usuario">
                 <i class="bx bxs-lock-alt "></i>
                 </div>
+
+<div class="input-box">
+    <!-- Adicionado o atributo 'pattern' para o formato exato XXX.XXX.XXX-XX ou XXXXXXXXXXX -->
+    <input 
+        placeholder="CPF" 
+        type="text" 
+        name="CPF" 
+        id="CPF"
+        pattern="(\d{3}\.\d{3}\.\d{3}-\d{2})|(\d{11})"
+        title="Digite um CPF no formato 000.000.000-00 ou 00000000000"
+        maxlength="14"
+        required
+    >
+    <i class="bx bxs-lock-alt"></i>
+</div>
+
+                <div class="input-box">
+                <input placeholder="Telefone" type="text" name="Telefone" id="Telefone">
+                <i class="bx bxs-lock-alt "></i>
+                </div>
+
             <div class="input-box">
                 <input placeholder="Senha" type="password" name="password" id="password">
                 <i class="bx bxs-lock-alt "></i>
                 </div>
+
                 <div class="input-box">
                 <input placeholder="Confirmar senha" type="password" name="confirmPassword" id="confirmPassword">
                 <i class="bx bxs-lock-alt "></i>
@@ -34,9 +57,9 @@
                         Lembrar senha
                      </label>
                 </div>
-                <button type="submit" id="Login">Proximo passo</button>
+                <button type="submit" id="Login">Finalizar cadastro</button>
                 <div class="register-link">
-                    <p>Já tem uma conta?<a href="/pagina.login/login/index.html">Entrar</a></p>
+                    <p>Já tem uma conta?<a href="/html-css/pagina.menu/index.html">Entrar</a></p>
                 </div>
         </form>
     </main>

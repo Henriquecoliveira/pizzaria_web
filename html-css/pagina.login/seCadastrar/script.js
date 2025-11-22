@@ -27,5 +27,5 @@ document.getElementById('form').addEventListener('submit', (event) => {
    alert('Cadastro validado com sucesso!');
 
    // Redireciona para próxima página
-   window.location.href = '/pagina.login/seCadastrar/proximo_passo/endereco.html';
+   window.location.href = '/html-css/pagina.menu/index.html';
 });
