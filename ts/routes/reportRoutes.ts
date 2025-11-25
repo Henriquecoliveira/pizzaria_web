@@ -1,4 +1,3 @@
-// ts/routes/reportRoutes.ts
 import express from "express";
 import sql from "mssql";
 import { getPool } from "../db_pizzaria.js";

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { getPool } from "../db_pizzaria.js"; // <<< usa a pool centralizada 👍
+import { getPool } from "../db_pizzaria.js";
 import sql from "mssql";
 
 const router = Router();
@@ -25,7 +25,7 @@ router.post("/", async (req: Request, res: Response): Promise<Response> => {
   }
 
   try {
-    const pool = await getPool(); // <<< usa sua função correta
+    const pool = await getPool();
 
     const result = await pool
       .request()

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPool } from "../db_pizzaria.js"; // <<< usa a pool centralizada 👍
+import { getPool } from "../db_pizzaria.js";
 import sql from "mssql";
 const router = Router();
 // ===== ROTA DE LOGIN =====
@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
         return res.status(400).json({ error: "Credenciais incompletas." });
     }
     try {
-        const pool = await getPool(); // <<< usa sua função correta
+        const pool = await getPool();
         const result = await pool
             .request()
             .input("login", sql.VarChar, login)

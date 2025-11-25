@@ -1,9 +1,9 @@
  document.getElementById('login-btn').addEventListener('click', () => {
-    window.location.href = '/html-css/pagina.login/login/index.html'; // Aqui vai a URL que você quer abrir
+    window.location.href = '/html-css/pagina.login/login/index.html';
  });
 
   document.getElementById('peca.aqui').addEventListener('click', () => {
-    window.location.href = '/html-css/pagina.menu/index.html'; // Aqui vai a URL que você quer abrir
+    window.location.href = '/html-css/pagina.menu/index.html'; 
  });
 
 

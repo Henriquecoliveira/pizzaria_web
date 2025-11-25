@@ -1,5 +1,3 @@
-// ts/routes/pedidoRoutes.ts
-// (substitua TODO o conteúdo atual por este)
 
 import express from "express";
 import sql from "mssql";
@@ -34,7 +32,7 @@ router.post("/finalizar", async (req, res) => {
     // Normaliza/valida itens
     const itensValidos = [];
     for (const it of itens) {
-      const id = Number(it.id);           // <-- ID da pizza
+      const id = Number(it.id);           // ID da pizza
       const quantidade = Number(it.quantidade);
       const preco = Number(it.preco);
 
@@ -56,7 +54,7 @@ router.post("/finalizar", async (req, res) => {
 
     try {
       // ===========================================================
-      // 1) INSERIR PEDIDO (compatível com SEU BANCO)
+      // 1) INSERIR PEDIDO 
       // ===========================================================
 
       const reqPedido = new sql.Request(transaction);
@@ -81,10 +79,9 @@ router.post("/finalizar", async (req, res) => {
         throw new Error("Não foi possível obter PEDIDO_ID após o INSERT.");
 
       // ===========================================================
-      // 2) INSERIR ITENS DO PEDIDO (compatível com SEU BANCO)
+      // 2) INSERIR ITENS DO PEDIDO
       // ===========================================================
-      // Tabela PEDIDO_ITENS possui:
-      // ITEM_ID, PEDIDO_ID, ALIMENTO, PRECO
+
 
       for (const item of itensValidos) {
         const reqItem = new sql.Request(transaction);
@@ -92,7 +89,6 @@ router.post("/finalizar", async (req, res) => {
         reqItem.input("PEDIDO_ID", sql.Int, pedidoId);
 
         // Aqui buscamos o nome da pizza pela PIZZA_ID
-        // porque no seu banco PEDIDO_ITENS usa "ALIMENTO"
         const pizza = await pool
           .request()
           .input("ID", sql.Int, item.id)
