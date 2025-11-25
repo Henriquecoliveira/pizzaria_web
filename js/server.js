@@ -10,6 +10,7 @@ import pizzaRoutes from './routes/pizzaRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
 import reportRoutes from "./routes/reportRoutes.js";
+import clientesRoutes from "./routes/ClientesRoutes.js";
 const app = express();
 // ===== DEFINE __dirname (necessário para resolver caminhos corretamente) =====
 const __filename = fileURLToPath(import.meta.url);
@@ -49,6 +50,7 @@ app.use('/login', loginRoutes);
 app.use('/pedido', pedidoRoutes);
 // usa as rotas relacionadas a relatórios
 app.use("/relatorio", reportRoutes);
+app.use("/clientes", clientesRoutes);
 // inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
